@@ -83,7 +83,6 @@ if __name__ == "__main__":
     monsters.append(creatures.monster())
     monsters[-1].load("Thistlefolk Thief")
 
-    outs = []
     sim = simulation()
     wins = 0
     losses = 0

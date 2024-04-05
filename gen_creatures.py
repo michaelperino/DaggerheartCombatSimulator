@@ -1,3 +1,4 @@
+import inspect
 import creatures
 
 p = creatures.player()

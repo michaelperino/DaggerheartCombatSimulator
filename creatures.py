@@ -14,9 +14,12 @@ class attack:
         self.hope_cost = 0
         self.stress_cost = 0
 
+    def __str__(self):
+        return "prio"+str(self.prio)+" dice"+str(self.damage_dice)+" aoe"+str(self.AOE)
+
 class player:
     def __init__(self):
-        self.name = None
+        self.name = ""
         self.hitpoints = 0
         self.evasion = 0
         self.damage_lim = [0,0,0]
@@ -84,32 +87,32 @@ class player:
         if os.path.exists(folderpath+filename):
             with open(folderpath+filename,'rb') as f:
                 loady = pickle.load(f)
-        self.name =loady.name 
-        self.hitpoints =loady.hitpoints 
-        self.evasion =loady.evasion 
-        self.damage_lim =loady.damage_lim 
-        self.armor_amt =loady.armor_amt 
-        self.armor_pts =loady.armor_pts 
-        self.stress =loady.stress 
-        self.hope =loady.hope 
-        for i in range(len(loady.attacks)):
-            self.attacks.append(copy.deepcopy(loady.attacks[i]))
-        self.attacks.sort(key=lambda x:x.prio,reverse=True)
+            self.name =loady.name 
+            self.hitpoints =loady.hitpoints 
+            self.evasion =loady.evasion 
+            self.damage_lim =loady.damage_lim 
+            self.armor_amt =loady.armor_amt 
+            self.armor_pts =loady.armor_pts 
+            self.stress =loady.stress 
+            self.hope =loady.hope 
+            for i in range(len(loady.attacks)):
+                self.attacks.append(copy.deepcopy(loady.attacks[i]))
+            self.attacks.sort(key=lambda x:x.prio,reverse=True)
 
         
 
 class monster:
     def __init__(self):
-        self.name = None
+        self.name = ""
         self.hitpoints = 0
         self.evasion = 0
         self.damage_lim = [0,0,0]
         self.stress = 0
-        self.damage_dice = []
-        self.damage_add = 0
-        self.att_bonus = 0
-        self.AOE = 0
-        self.AOE_Mult = 1
+        #self.damage_dice = []
+        #self.damage_add = 0
+        #self.att_bonus = 0
+        #self.AOE = 0
+        #self.AOE_Mult = 1
         self.attacks = []
 
     def attack(self,fear):
@@ -121,7 +124,8 @@ class monster:
         roll = random.randint(1,20)
         crit = 0
         if roll == 20:
-            crit = 1
+            #crit = 1
+            crit = 0
         roll += att.att_bonus
         damage = att.damage_add
         for i in att.damage_dice:
@@ -156,10 +160,11 @@ class monster:
         if os.path.exists(folderpath+filename):
             with open(folderpath+filename,'rb') as f:
                 loady = pickle.load(f)
-        self.name =loady.name 
-        self.hitpoints =loady.hitpoints 
-        self.evasion =loady.evasion 
-        self.damage_lim =loady.damage_lim 
-        self.stress =loady.stress 
-        for i in range(len(loady.attacks)):
-            self.attacks.append(copy.deepcopy(loady.attacks[i]))
+            self.name =loady.name 
+            self.hitpoints =loady.hitpoints 
+            self.evasion =loady.evasion 
+            self.damage_lim =loady.damage_lim 
+            self.stress =loady.stress 
+            for i in range(len(loady.attacks)):
+                self.attacks.append(copy.deepcopy(loady.attacks[i]))
+            self.attacks.sort(key=lambda x:x.prio,reverse=True)
