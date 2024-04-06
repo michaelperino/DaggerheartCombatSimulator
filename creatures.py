@@ -106,6 +106,10 @@ class player:
             self.armor_pts =loady.armor_pts 
             self.stress =loady.stress 
             self.hope =loady.hope 
+            if hasattr(loady,'__notgoodenough__'):
+                self.__notgoodenough__ = loady.__notgoodenough__
+                if self.__notgoodenough__:
+                    print("NOT GOOD ENOUGH!")
             for i in range(len(loady.attacks)):
                 self.attacks.append(copy.deepcopy(loady.attacks[i]))
             self.attacks.sort(key=lambda x:x.prio,reverse=True)
