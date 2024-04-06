@@ -1,7 +1,6 @@
 from collections import Counter
 import copy
 import random
-import itertools
 import creatures
 
 class simulation:
