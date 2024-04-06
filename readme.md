@@ -18,9 +18,17 @@ One current issue is that I didn't track damage types which would be necessary t
 
 I haven't implemented healing spells yet.
 
+The way combat works is the list of players and monsters are shuffled. All the monsters and players gang up on one of the opposing party. AOE spells work their way down the list 
+
 ## Contributing
 
 Pull requests are welcome, especially if you see a spot where my analysis is incorrect (I've only played one combat session and I can't guarantee we played correctly...)
 I'd like to not bog down the program with every feature under the sun though. 
 
 For an example on adding custom fields to characters, I did create the \_\_notgoodenough__ field purely for testing its effectiveness on Garrick (it's not super effective by the way).
+
+## Screenshots
+
+![image](https://github.com/michaelperino/DaggerheartCombatSimulator/assets/33206261/5317db53-cfa0-407c-94b9-6564e6bf8a33)
+
+![image](https://github.com/michaelperino/DaggerheartCombatSimulator/assets/33206261/c77346d2-7260-480e-a1f5-39856c519b72)
