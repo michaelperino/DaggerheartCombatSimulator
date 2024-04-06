@@ -53,9 +53,11 @@ class SimFrame(ctk.CTkFrame):
         self.run_but = ctk.CTkButton(self,text="Run Simulation",command=self.run_sim)
         self.run_but.grid(row=1,column=0,padx=20,pady=20)
         self.wins_label = ctk.CTkLabel(self,text="Wins:   ")
-        self.wins_label.grid(row=2,column=0,padx=(20,20),pady=(20,20),sticky="n")
+        self.wins_label.grid(row=3,column=0,padx=(20,20),pady=(20,20),sticky="n")
         self.loses_label = ctk.CTkLabel(self,text="Losses: ")
-        self.loses_label.grid(row=3,column=0,padx=(20,20),pady=(20,20),sticky="n")
+        self.loses_label.grid(row=4,column=0,padx=(20,20),pady=(20,20),sticky="n")
+        self.survival_percentages = ctk.CTkLabel(self,text="Survivors per simulation: \n")
+        self.survival_percentages.grid(row=2,column=0,padx=(20,20),pady=(20,20),sticky="n")
             
     def del_player(self,mon):
         self.master.players.remove(mon)
@@ -113,6 +115,10 @@ class SimFrame(ctk.CTkFrame):
         print("PLAY ",total_play/sim_num,"      MON ",total_mon/sim_num,"     TOTAL ",(total_play+total_mon)/sim_num)
         print(survivals.most_common())
         print(deaths.most_common())
+        temp = "Survivors per simulation: \n"
+        for i in survivals.most_common():
+            temp+= i[0]+" "+str(i[1]/sim_num)+"\n"
+        self.survival_percentages.configure(text=temp)
 
 class main(ctk.CTk):
     def __init__(self, *args, **kwargs):

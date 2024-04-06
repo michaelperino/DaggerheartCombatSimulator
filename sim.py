@@ -27,7 +27,7 @@ class simulation:
                 self.actions += 1
                 player = self.players[self.player_idx%len(self.players)]
                 att_out = player.attack()
-                fear = att_out[0]
+                fear = not att_out[0]
                 for i in range(att_out[3]+1):
                     if i < len(self.monsters):
                         monster = self.monsters[i]
