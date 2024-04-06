@@ -136,8 +136,9 @@ class main(ctk.CTk):
         
 
     def gen_sel_frame(self):
-        self.sel_frame = creature_editor.AvailableMonstersFrame(self)
+        self.sel_frame = creature_editor.AvailableMonstersFrame(self,new_buttons=False)
         self.sel_frame.grid(row=1,column=0,padx=(20,10),pady=(20,20),sticky = "nsw")
+
 
     def gen_center_frame(self):
         self.cen_frame = ChosenMonstersFrame(self)

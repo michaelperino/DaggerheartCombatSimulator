@@ -33,6 +33,7 @@ class player:
         #self.att_bonus = 0
         #self.AOE = 0
         #self.AOE_Mult = 1
+        self.__notgoodenough__ = False
 
     def attack(self):
         for i in self.attacks:
@@ -48,8 +49,16 @@ class player:
                 damage += i
             self.hope = min(5,self.hope+1)
             self.stress = max(0,self.stress - 1)
-        for i in att.damage_dice:
-            damage += random.randint(1,i)
+        if self.__notgoodenough__:
+            for i in att.damage_dice:
+                temp = random.randint(1,i)
+                if temp == 1 or temp == 2:
+                    damage += random.randint(1,i)
+                else:
+                    damage += temp
+        else:
+            for i in att.damage_dice:
+                damage += random.randint(1,i)
         damage += att.damage_add
         if hope > fear:
             self.hope = min(5,self.hope+1)
@@ -78,6 +87,8 @@ class player:
     def save(self,filename=None,folderpath="./players/"):
         if not filename:
             filename = self.name
+        if not os.path.exists(folderpath):
+            os.makedirs(folderpath)
         with open(folderpath+filename,'wb') as f:
             pickle.dump(self,f)
 
@@ -151,6 +162,8 @@ class monster:
     def save(self,filename=None,folderpath="./monsters/"):
         if not filename:
             filename = self.name
+        if not os.path.exists(folderpath):
+            os.makedirs(folderpath)
         with open(folderpath+filename,'wb') as f:
             pickle.dump(self,f)
 

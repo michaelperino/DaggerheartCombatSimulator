@@ -35,7 +35,7 @@ class CharacterInfoFrame(ctk.CTkFrame):
         self.write_loc = write_loc
         super().__init__(master)
         self.master = master
-        self.list_match = re.compile("^\[([0-9\,\ ])+\]$")
+        self.list_match = re.compile("^\[([0-9\,\ ])*\]$")
         self.ic = self.register(self.int_callback)
         self.lc = self.register(self.list_callback)
         self.att = None
@@ -149,19 +149,21 @@ class CharacterInfoFrame(ctk.CTkFrame):
    
 
 class AvailableMonstersFrame(ctk.CTkFrame):
-    def __init__(self, master):
+    def __init__(self, master, new_buttons=True):
         super().__init__(master)
         self.master = master
-        new_p_button = ctk.CTkButton(self,text="New Player", command = self.new_player,width=WIDTH/4.5)
-        new_p_button.grid(row = 0, column = 1, padx=10,pady=(10,0),sticky="n")
+        if new_buttons:
+            self.new_p_button = ctk.CTkButton(self,text="New Player", command = self.new_player,width=WIDTH/4.5)
+            self.new_p_button.grid(row = 0, column = 1, padx=10,pady=(10,0),sticky="n")
         player_scroll = ctk.CTkScrollableFrame(self,label_text="Saved Players",height=150,width=WIDTH/4)
         player_scroll.grid(row =1, column=1, padx = 10,pady=(10,10),sticky = "n")
         play_buttons = []
         for i,val in enumerate(glob.glob(PLAYER_DIR)):
             play_buttons.append(ctk.CTkButton(player_scroll,text=val, command = lambda m=val:self.load_player(m),width=WIDTH/5))
             play_buttons[-1].grid(row=i,column=0,padx=10,pady=(10,0),sticky="w")
-        new_m_button = ctk.CTkButton(self,text="New Monster", command = self.new_monster,width=WIDTH/4.5)
-        new_m_button.grid(row = 2, column = 1, padx=10,pady=(10,0),sticky="n")
+        if new_buttons:
+            self.new_m_button = ctk.CTkButton(self,text="New Monster", command = self.new_monster,width=WIDTH/4.5)
+            self.new_m_button.grid(row = 2, column = 1, padx=10,pady=(10,0),sticky="n")
         mon_scroll = ctk.CTkScrollableFrame(self,label_text="Saved Monsters",height=150,width=WIDTH/4)
         mon_scroll.grid(row =3, column=1, padx = 10,pady=(10,10),sticky = "n")
         mon_buttons = []
