@@ -4,7 +4,7 @@ import random
 import creatures
 
 class simulation:
-    def __init__(self):
+    def __init__(self, monster_dogpile=True):
         self.players = []
         self.monsters = []
         self.fear = 0
@@ -13,6 +13,7 @@ class simulation:
         self.monster_idx = 0
         self.player_actions = 0
         self.monster_actions = 0
+        self.monster_dogpile = monster_dogpile
     
     def run_sim(self):
         self.player_actions = 0
@@ -20,6 +21,7 @@ class simulation:
         fear = random.randint(1,10) <= 2
         if fear:
             self.actions = 4
+        player_targets = list(range(0,len(self.players)))
         while len(self.players) > 0 and len(self.monsters) > 0:
             monster = self.monsters[0]
             while not fear:
@@ -32,6 +34,7 @@ class simulation:
                     if i < len(self.monsters):
                         monster = self.monsters[i]
                         d = monster.defend(att_out[1],att_out[2]*(att_out[4] if i > 0 else 1))
+                        #print(player.name,monster.name,att_out,monster)
                         #print(player,monster,att_out,d)
                         if monster.hitpoints <= 0:
                             self.monsters.pop(i)
@@ -41,19 +44,23 @@ class simulation:
                 self.player_idx += 1
             if len(self.monsters) > 0:
                 self.monster_actions += 1
-                player = self.players[0]
+                #player = self.players[player_targets[0]]
                 while self.actions > 0:
+                    if not self.monster_dogpile:
+                        random.shuffle(player_targets)
                     self.actions -= 1
                     monster = self.monsters[self.monster_idx%(len(self.monsters))]
                     att_out = monster.attack(self.fear)
                     self.fear -= att_out[5]
                     for i in range(att_out[3]+1):
-                        if i < len(self.players):
-                            player = self.players[i]
+                        if i < len(player_targets):
+                            player = self.players[player_targets[i]]
                             d = player.defend(att_out[1],att_out[2])
+                            #print(monster.name,player.name,att_out,d,player)
                             #print(monster,player,att_out,d)
                             if player.hitpoints <= 0:
                                 self.players.pop(i)
+                                player_targets = list(range(0,len(self.players)))
                                 if len(self.players) == 0:
                                     break
                                 #player = self.players[0]`

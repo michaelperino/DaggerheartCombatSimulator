@@ -43,6 +43,7 @@ class SimFrame(ctk.CTkFrame):
         super().__init__(master)
         self.master = master
         self.gen_frame()
+        self.dogpile = True
 
 
     def gen_frame(self):
@@ -53,11 +54,14 @@ class SimFrame(ctk.CTkFrame):
         self.run_but = ctk.CTkButton(self,text="Run Simulation",command=self.run_sim)
         self.run_but.grid(row=1,column=0,padx=20,pady=20)
         self.wins_label = ctk.CTkLabel(self,text="Wins:   ")
-        self.wins_label.grid(row=3,column=0,padx=(20,20),pady=(20,20),sticky="n")
+        self.wins_label.grid(row=4,column=0,padx=(20,20),pady=(20,20),sticky="n")
         self.loses_label = ctk.CTkLabel(self,text="Losses: ")
-        self.loses_label.grid(row=4,column=0,padx=(20,20),pady=(20,20),sticky="n")
+        self.loses_label.grid(row=5,column=0,padx=(20,20),pady=(20,20),sticky="n")
         self.survival_percentages = ctk.CTkLabel(self,text="Survivors per simulation: \n")
-        self.survival_percentages.grid(row=2,column=0,padx=(20,20),pady=(20,20),sticky="n")
+        self.survival_percentages.grid(row=3,column=0,padx=(20,20),pady=(20,20),sticky="n")
+        self.enable_dogpile = ctk.CTkCheckBox(self,text="Enable dogpile monster targeting?")
+        self.enable_dogpile.grid(row=2,column=0,padx=(20,20),pady=(20,20),sticky="n")
+        self.enable_dogpile.select()
             
     def del_player(self,mon):
         self.master.players.remove(mon)
@@ -67,7 +71,7 @@ class SimFrame(ctk.CTkFrame):
         self.gen_frame()
 
     def run_sim(self):
-        simmy = sim.simulation()
+        simmy = sim.simulation(monster_dogpile = self.enable_dogpile.get())
         wins = 0
         losses = 0
         survivals = Counter()
